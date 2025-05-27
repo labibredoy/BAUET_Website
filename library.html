@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BAUET Library - Books & Resources</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .library-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('P.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 20px;
+            text-align: center;
+        }
+
+        .library-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .library-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .library-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            transition: transform 0.3s ease;
+        }
+
+        .library-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .library-card i {
+            font-size: 2.5em;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .library-card h3 {
+            color: var(--text-color);
+            margin-bottom: 15px;
+        }
+
+        .library-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .book-search {
+            background: #f5f5f5;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .search-box {
+            max-width: 600px;
+            margin: 20px auto;
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 12px 20px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .search-box button {
+            padding: 12px 30px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .search-box button:hover {
+            background: var(--secondary-color);
+        }
+
+        .library-hours {
+            background: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .hours-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .hours-card {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .hours-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        /* Borrowing System Styles */
+        .borrowing-system {
+            padding: 40px 20px;
+            background: #f9f9f9;
+        }
+
+        .borrowing-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .borrowing-form, .return-form {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .borrowing-form h3, .return-form h3 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: var(--primary-color);
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background: var(--secondary-color);
+        }
+
+        .action-btn {
+            padding: 6px 12px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .action-btn:hover {
+            background: var(--secondary-color);
+        }
+
+        .borrowing-history {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .borrowing-history h3 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .history-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .stat-card i {
+            font-size: 2em;
+            color: var(--primary-color);
+        }
+
+        .stat-info h4 {
+            color: #666;
+            margin: 0;
+            font-size: 0.9em;
+        }
+
+        .stat-info p {
+            color: var(--text-color);
+            margin: 5px 0 0;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .history-filters {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .history-filters .filter-btn {
+            padding: 10px 20px;
+            border: 1px solid var(--primary-color);
+            border-radius: 5px;
+            background: transparent;
+            color: var(--primary-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .history-filters .filter-btn i {
+            font-size: 1.1em;
+        }
+
+        .history-filters .filter-btn.active,
+        .history-filters .filter-btn:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .book-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .book-cover {
+            width: 50px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .book-info h4 {
+            margin: 0;
+            color: var(--text-color);
+        }
+
+        .book-author {
+            margin: 5px 0 0;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+
+        .status-current {
+            background: #e8f5e9;
+            color: #28a745;
+        }
+
+        .status-overdue {
+            background: #ffebee;
+            color: #dc3545;
+        }
+
+        .status-returned {
+            background: #f5f5f5;
+            color: #6c757d;
+        }
+
+        .action-btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.9em;
+        }
+
+        .view-btn {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .return-btn {
+            background: #e8f5e9;
+            color: #28a745;
+        }
+
+        .action-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .book-row {
+            transition: all 0.3s ease;
+        }
+
+        .book-row:hover {
+            background: #f8f9fa;
+        }
+
+        .notifications-section {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .notifications-section h3 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .notification-settings {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .setting-item {
+            margin-bottom: 10px;
+        }
+
+        .setting-item input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        .notification-item {
+            display: flex;
+            align-items: start;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .notification-item i {
+            color: var(--primary-color);
+            margin-right: 15px;
+            font-size: 20px;
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-time {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .status-current {
+            color: #28a745;
+        }
+
+        .status-overdue {
+            color: #dc3545;
+        }
+
+        .status-returned {
+            color: #6c757d;
+        }
+
+        /* Enhanced Borrowing History Styles */
+        .history-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .stat-card i {
+            font-size: 2em;
+            color: var(--primary-color);
+        }
+
+        .stat-info h4 {
+            color: #666;
+            margin: 0;
+            font-size: 0.9em;
+        }
+
+        .stat-info p {
+            color: var(--text-color);
+            margin: 5px 0 0;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .history-filters {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .history-filters .filter-btn {
+            padding: 10px 20px;
+            border: 1px solid var(--primary-color);
+            border-radius: 5px;
+            background: transparent;
+            color: var(--primary-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .history-filters .filter-btn i {
+            font-size: 1.1em;
+        }
+
+        .history-filters .filter-btn.active,
+        .history-filters .filter-btn:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .history-table {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .history-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .history-table th,
+        .history-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .history-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            font-weight: 500;
+            display: inline-block;
+        }
+
+        .status-current {
+            background: #e8f5e9;
+            color: #28a745;
+        }
+
+        .status-overdue {
+            background: #ffebee;
+            color: #dc3545;
+        }
+
+        .status-returned {
+            background: #f5f5f5;
+            color: #6c757d;
+        }
+
+        .action-btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.9em;
+        }
+
+        .view-btn {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .return-btn {
+            background: #e8f5e9;
+            color: #28a745;
+        }
+
+        .action-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .book-row {
+            transition: all 0.3s ease;
+        }
+
+        .book-row:hover {
+            background: #f8f9fa;
+        }
+
+        /* Modal Styles */
+        .book-details-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 600px;
+            width: 90%;
+        }
+
+        .book-details {
+            margin: 20px 0;
+        }
+
+        .details-info h4 {
+            margin: 0 0 15px;
+            color: var(--text-color);
+        }
+
+        .details-info p {
+            margin: 10px 0;
+            color: #666;
+        }
+
+        .close-modal {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .close-modal:hover {
+            background: var(--secondary-color);
+        }
+
+        /* Success Message */
+        .success-message {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #4caf50;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar (Same as Home_Page.html) -->
+    <nav class="navbar">
+        <div class="logo-container">
+            <a href="Home_Page.html" style="display: flex; align-items: center; gap: 1rem; text-decoration: none; color: var(--text-color);">
+                <img src="L.png" alt="University Logo" style="height: 50px; width: auto;">
+                <div class="logo-text">
+                    <h2>BAUET</h2>
+                    <p>Bangladesh Army University of Engineering & Technology</p>
+                </div>
+            </a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="Home_Page.html"><i class="fas fa-home"></i> Home</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle"><i class="fas fa-user"></i> Profile <i class="fas fa-chevron-down"></i></a>
+                <ul class="dropdown-menu">
+                    <li><a href="profile.html"><i class="fas fa-id-card"></i> Student Profile</a></li>
+                    <li><a href="profile.html#academic-info"><i class="fas fa-user-graduate"></i> Academic Info</a></li>
+                </ul>
+            </li>
+            <li class="dropdown account-dropdown-container">
+                <a href="#" class="dropdown-toggle"><i class="fas fa-user-circle"></i> Account <i class="fas fa-chevron-down"></i></a>
+                <ul class="dropdown-menu">
+                    <li><a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                    <li><a href="signup.html"><i class="fas fa-user-plus"></i> Sign Up</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Library Hero Section -->
+    <section class="library-hero">
+        <h1>BAUET Central Library</h1>
+        <p>Your Gateway to Knowledge and Research</p>
+    </section>
+
+    <!-- Book Borrowing System -->
+    <section class="borrowing-system">
+        <h2 class="section-title">Quick Book Borrowing</h2>
+        <div class="borrowing-container">
+            <!-- Borrowing Form -->
+            <div class="borrowing-form">
+                <h3><i class="fas fa-book"></i> Borrow a Book</h3>
+                <form id="borrowForm">
+                    <div class="form-group">
+                        <input type="text" id="bookId" placeholder="Enter Book ID or ISBN">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="studentId" placeholder="Enter your Student ID">
+                    </div>
+                    <div class="form-group">
+                        <label for="borrowDate">Borrow Date</label>
+                        <input type="date" id="borrowDate" value="<?php echo date('Y-m-d'); ?>">
+                    </div>
+                    <div class="form-group">
+                        <label for="returnDate">Expected Return Date</label>
+                        <input type="date" id="returnDate" value="<?php echo date('Y-m-d', strtotime('+14 days')); ?>">
+                    </div>
+                    <button type="submit" class="submit-btn">Borrow Book</button>
+                </form>
+            </div>
+
+            <!-- Return Form -->
+            <div class="return-form">
+                <h3><i class="fas fa-undo"></i> Return a Book</h3>
+                <form id="returnForm">
+                    <div class="form-group">
+                        <input type="text" id="returnBookId" placeholder="Enter Book ID or ISBN">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="returnStudentId" placeholder="Enter your Student ID">
+                    </div>
+                    <div class="form-group">
+                        <label for="actualReturnDate">Return Date</label>
+                        <input type="date" id="actualReturnDate" value="<?php echo date('Y-m-d'); ?>">
+                    </div>
+                    <button type="submit" class="submit-btn">Return Book</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Borrowing History -->
+        <div class="borrowing-history">
+            <h3><i class="fas fa-history"></i> Your Borrowed Books</h3>
+            <div class="history-stats">
+                <div class="stat-card">
+                    <i class="fas fa-book"></i>
+                    <div class="stat-info">
+                        <h4>Total Books</h4>
+                        <p>3</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-clock"></i>
+                    <div class="stat-info">
+                        <h4>Current</h4>
+                        <p>1</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <div class="stat-info">
+                        <h4>Overdue</h4>
+                        <p>1</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-check-circle"></i>
+                    <div class="stat-info">
+                        <h4>Returned</h4>
+                        <p>1</p>
+                    </div>
+                </div>
+            </div>
+            <div class="history-filters">
+                <button class="filter-btn active" data-filter="all">
+                    <i class="fas fa-list"></i> All
+                </button>
+                <button class="filter-btn" data-filter="current">
+                    <i class="fas fa-clock"></i> Current
+                </button>
+                <button class="filter-btn" data-filter="overdue">
+                    <i class="fas fa-exclamation-circle"></i> Overdue
+                </button>
+                <button class="filter-btn" data-filter="returned">
+                    <i class="fas fa-check-circle"></i> Returned
+                </button>
+            </div>
+            <div class="history-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Book Title</th>
+                            <th>Author</th>
+                            <th>Borrow Date</th>
+                            <th>Due Date</th>
+                            <th>Status</th>
+                            <th>Fine</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historyTableBody">
+                        <tr class="book-row" data-status="returned">
+                            <td>Introduction to Algorithms</td>
+                            <td>Thomas H. Cormen</td>
+                            <td>2024-03-01</td>
+                            <td>2024-03-15</td>
+                            <td><span class="status-badge status-returned">Returned</span></td>
+                            <td>0 BDT</td>
+                            <td>
+                                <button class="action-btn view-btn" onclick="viewDetails('B001')">
+                                    <i class="fas fa-eye"></i> View
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="book-row" data-status="current">
+                            <td>Database Systems</td>
+                            <td>Ramez Elmasri</td>
+                            <td>2024-03-10</td>
+                            <td>2024-03-24</td>
+                            <td><span class="status-badge status-current">Current</span></td>
+                            <td>0 BDT</td>
+                            <td>
+                                <button class="action-btn return-btn" onclick="returnBook('B002')">
+                                    <i class="fas fa-undo"></i> Return
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="book-row" data-status="overdue">
+                            <td>Computer Networks</td>
+                            <td>Andrew S. Tanenbaum</td>
+                            <td>2024-02-15</td>
+                            <td>2024-03-01</td>
+                            <td><span class="status-badge status-overdue">Overdue</span></td>
+                            <td>50 BDT</td>
+                            <td>
+                                <button class="action-btn return-btn" onclick="returnBook('B003')">
+                                    <i class="fas fa-undo"></i> Return
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Notifications -->
+        <div class="notifications-section">
+            <h3><i class="fas fa-bell"></i> Notifications</h3>
+            <div class="notification-settings">
+                <h4>Notification Settings</h4>
+                <div class="setting-item">
+                    <input type="checkbox" id="emailNotif" checked>
+                    <label for="emailNotif">Email Notifications</label>
+                </div>
+                <div class="setting-item">
+                    <input type="checkbox" id="smsNotif" checked>
+                    <label for="smsNotif">SMS Notifications</label>
+                </div>
+                <div class="setting-item">
+                    <input type="checkbox" id="dueReminder" checked>
+                    <label for="dueReminder">Due Date Reminders</label>
+                </div>
+                <div class="setting-item">
+                    <input type="checkbox" id="overdueAlert" checked>
+                    <label for="overdueAlert">Overdue Alerts</label>
+                </div>
+            </div>
+            <div class="notification-list">
+                <div class="notification-item">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <div class="notification-content">
+                        <p>Computer Networks is overdue. Return to avoid fines.</p>
+                        <span class="notification-time">2 hours ago</span>
+                    </div>
+                </div>
+                <div class="notification-item">
+                    <i class="fas fa-info-circle"></i>
+                    <div class="notification-content">
+                        <p>Database Systems due in 2 days</p>
+                        <span class="notification-time">1 day ago</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Library Features -->
+    <section class="library-container">
+        <h2 class="section-title">Library Services</h2>
+        <div class="library-grid">
+            <div class="library-card">
+                <i class="fas fa-book"></i>
+                <h3>Book Collection</h3>
+                <p>Access our extensive collection of over 10,000 books covering engineering, technology, and general subjects.</p>
+            </div>
+            <div class="library-card">
+                <i class="fas fa-laptop"></i>
+                <h3>Digital Resources</h3>
+                <p>Access to IEEE Xplore, ScienceDirect, and other digital databases.</p>
+            </div>
+            <div class="library-card">
+                <i class="fas fa-users"></i>
+                <h3>Study Spaces</h3>
+                <p>Modern reading rooms with comfortable seating and quiet zones.</p>
+            </div>
+            <div class="library-card">
+                <i class="fas fa-headphones"></i>
+                <h3>Multimedia Center</h3>
+                <p>Computer lab with internet access and printing facilities.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Library Hours -->
+    <section class="library-hours">
+        <h2 class="section-title">Library Hours</h2>
+        <div class="hours-grid">
+            <div class="hours-card">
+                <h4>Weekdays (Sunday - Thursday)</h4>
+                <p>8:00 AM - 8:00 PM</p>
+            </div>
+            <div class="hours-card">
+                <h4>Friday</h4>
+                <p>9:00 AM - 1:00 PM</p>
+            </div>
+            <div class="hours-card">
+                <h4>Saturday</h4>
+                <p>9:00 AM - 5:00 PM</p>
+            </div>
+            <div class="hours-card">
+                <h4>Holidays</h4>
+                <p>Closed on University Holidays</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Library Rules -->
+    <section class="library-container">
+        <h2 class="section-title">Library Rules & Regulations</h2>
+        <div class="library-grid">
+            <div class="library-card">
+                <i class="fas fa-id-card"></i>
+                <h3>Membership</h3>
+                <p>All students and faculty members are automatically members. Valid ID card required for entry and borrowing.</p>
+            </div>
+            <div class="library-card">
+                <i class="fas fa-book-reader"></i>
+                <h3>Borrowing Rules</h3>
+                <p>Students can borrow up to 3 books for 14 days. Faculty members can borrow up to 5 books for 30 days.</p>
+            </div>
+            <div class="library-card">
+                <i class="fas fa-exclamation-circle"></i>
+                <h3>Fines & Penalties</h3>
+                <p>Late return fine: 5 BDT per day per book. Lost book replacement cost plus processing fee.</p>
+            </div>
+            <div class="library-card">
+                <i class="fas fa-shield-alt"></i>
+                <h3>General Rules</h3>
+                <p>Maintain silence, no food or drinks, handle books with care, and follow staff instructions.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-map-marker-alt"></i> BAUET, Qadirabad Cantonment, Natore</p>
+                <p><i class="fas fa-phone"></i> +880 1234-567890</p>
+                <p><i class="fas fa-envelope"></i> info@bauet.ac.bd</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="Home_Page.html">Home</a></li>
+                    <li><a href="https://bauet.ac.bd/about/about-us/">About Us</a></li>
+                    <li><a href="https://bauet.ac.bd/academic/academic-calendar/">Academic Calendar</a></li>
+                    <li><a href="https://bauet.ac.bd/contact/">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 BAUET. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Borrowing System JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set default dates
+            const today = new Date().toISOString().split('T')[0];
+            const twoWeeksLater = new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+            
+            document.getElementById('borrowDate').value = today;
+            document.getElementById('returnDate').value = twoWeeksLater;
+            document.getElementById('actualReturnDate').value = today;
+
+            // Form submissions
+            const borrowForm = document.getElementById('borrowForm');
+            const returnForm = document.getElementById('returnForm');
+
+            if (borrowForm) {
+                borrowForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const bookId = document.getElementById('bookId').value;
+                    const studentId = document.getElementById('studentId').value;
+                    const borrowDate = document.getElementById('borrowDate').value;
+                    const returnDate = document.getElementById('returnDate').value;
+
+                    if (!bookId || !studentId) {
+                        alert('Please fill in all required fields');
+                        return;
+                    }
+
+                    // Add your borrowing logic here
+                    alert('Book borrowing request submitted successfully!');
+                    this.reset();
+                    document.getElementById('borrowDate').value = today;
+                    document.getElementById('returnDate').value = twoWeeksLater;
+                });
+            }
+
+            if (returnForm) {
+                returnForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const bookId = document.getElementById('returnBookId').value;
+                    const studentId = document.getElementById('returnStudentId').value;
+                    const returnDate = document.getElementById('actualReturnDate').value;
+
+                    if (!bookId || !studentId) {
+                        alert('Please fill in all required fields');
+                        return;
+                    }
+
+                    // Add your return logic here
+                    alert('Book return request submitted successfully!');
+                    this.reset();
+                    document.getElementById('actualReturnDate').value = today;
+                });
+            }
+
+            // History filters
+            const historyFilters = document.querySelectorAll('.history-filters .filter-btn');
+            const historyRows = document.querySelectorAll('#historyTableBody tr');
+
+            historyFilters.forEach(filter => {
+                filter.addEventListener('click', function() {
+                    const filterValue = this.getAttribute('data-filter');
+                    
+                    // Update active button
+                    historyFilters.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+
+                    // Filter rows
+                    historyRows.forEach(row => {
+                        const status = row.querySelector('td:nth-child(4)').className;
+                        if (filterValue === 'all' || status.includes(filterValue)) {
+                            row.style.display = '';
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    });
+                });
+            });
+
+            // Notification settings
+            const notificationCheckboxes = document.querySelectorAll('.notification-settings input[type="checkbox"]');
+            notificationCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    // Add your notification settings logic here
+                    console.log(`${this.id} setting changed to ${this.checked}`);
+                });
+            });
+        });
+
+        // Book action functions
+        function viewDetails(bookId) {
+            // Create and show modal with book details
+            const modal = document.createElement('div');
+            modal.className = 'book-details-modal';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <h3>Book Details</h3>
+                    <div class="book-details">
+                        <div class="details-info">
+                            <h4>Introduction to Algorithms</h4>
+                            <p><strong>Author:</strong> Thomas H. Cormen</p>
+                            <p><strong>ISBN:</strong> ${bookId}</p>
+                            <p><strong>Borrow Date:</strong> 2024-03-01</p>
+                            <p><strong>Return Date:</strong> 2024-03-15</p>
+                            <p><strong>Status:</strong> <span class="status-badge status-returned">Returned</span></p>
+                        </div>
+                    </div>
+                    <button class="close-modal">Close</button>
+                </div>
+            `;
+            document.body.appendChild(modal);
+
+            // Close modal functionality
+            modal.querySelector('.close-modal').addEventListener('click', () => {
+                modal.remove();
+            });
+        }
+
+        function returnBook(bookId) {
+            if (confirm(`Are you sure you want to return book ${bookId}?`)) {
+                // Update book status
+                const row = document.querySelector(`.book-row[data-book-id="${bookId}"]`);
+                if (row) {
+                    row.setAttribute('data-status', 'returned');
+                    row.querySelector('.status-badge').className = 'status-badge status-returned';
+                    row.querySelector('.status-badge').textContent = 'Returned';
+                    row.querySelector('.action-btn').className = 'action-btn view-btn';
+                    row.querySelector('.action-btn').innerHTML = '<i class="fas fa-eye"></i> View';
+                    row.querySelector('.action-btn').onclick = () => viewDetails(bookId);
+                }
+
+                // Show success message
+                const successMsg = document.createElement('div');
+                successMsg.className = 'success-message';
+                successMsg.textContent = `Book ${bookId} returned successfully!`;
+                document.body.appendChild(successMsg);
+
+                setTimeout(() => {
+                    successMsg.remove();
+                }, 3000);
+            }
+        }
+    </script>
+</body>
+</html> 

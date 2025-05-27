@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>BAUET - Bangladesh Army University of Engineering & Technology</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo-container">
+            <a href="Home_Page.html" style="display: flex; align-items: center; gap: 1rem; text-decoration: none; color: var(--text-color);">
+                <img src="L.png" alt="University Logo" style="height: 50px; width: auto;">
+                <div class="logo-text">
+                    <h2>BAUET</h2>
+                    <p>Bangladesh Army University of Engineering & Technology</p>
+                </div>
+            </a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="Home_Page.html"><i class="fas fa-home"></i> Home</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle"><i class="fas fa-user"></i> Profile <i class="fas fa-chevron-down"></i></a>
+                <ul class="dropdown-menu">
+                    <li><a href="profile.html"><i class="fas fa-id-card"></i> Student Profile</a></li>
+                    <li><a href="profile.html#academic-info"><i class="fas fa-user-graduate"></i> Academic Info</a></li>
+                </ul>
+            </li>
+            <li class="dropdown account-dropdown-container">
+                <a href="#" class="dropdown-toggle"><i class="fas fa-user-circle"></i> Account <i class="fas fa-chevron-down"></i></a>
+                <ul class="dropdown-menu">
+                    <li><a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                    <li><a href="signup.html"><i class="fas fa-user-plus"></i> Sign Up</a></li>
+                </ul>
+            </li>
+            <li class="dropdown menu-dropdown">
+                <a href="#" class="dropdown-toggle"><i class="fas fa-bars"></i> Menu <i class="fas fa-chevron-down"></i></a>
+                <ul class="dropdown-menu mega-menu">
+                    <div class="mega-menu-content">
+                        <div class="mega-menu-column">
+                            <h3>Quick Links</h3>
+                            <ul>
+                                <li><a href="http://iems.bauet.ac.bd/"><i class="fas fa-university"></i> IEMS Portal</a></li>
+                                <li><a href="assignment.html"><i class="fas fa-tasks"></i> Submit Assignment</a></li>
+                                <li><a href="evaluate_teachers.html"><i class="fas fa-star"></i> Evaluate Teachers</a></li>
+                                <li><a href="complaint.html"><i class="fas fa-comment-alt"></i> Submit Complaint</a></li>
+                            </ul>
+                        </div>
+                        <div class="mega-menu-column">
+                            <h3>Resources</h3>
+                            <ul>
+                                <li><a href="https://bauet.ac.bd/academic/academic-calendar/"><i class="fas fa-calendar-alt"></i> Academic Calendar</a></li>
+                                <li><a href="https://bauet.ac.bd/facilities/bauet-central-library/"><i class="fas fa-book"></i> Library</a></li>
+                                <li><a href="club.html"><i class="fas fa-users"></i> Student Clubs</a></li>
+                                <li><a href="chat.html"><i class="fas fa-comments"></i> Student Chat</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </ul>
+            </li>
+        </ul>
+        <div class="hamburger">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Slider -->
+    <section class="hero-section">
+        <div class="slider-container">
+            <div class="slider">
+                <img src="P.jpg" class="slide" />
+                <img src="Q.jpg" class="slide" />
+                <img src="C.jpg" class="slide" />
+            </div>
+            <button class="prev" onclick="prevSlide()"><i class="fas fa-chevron-left"></i></button>
+            <button class="next" onclick="nextSlide()"><i class="fas fa-chevron-right"></i></button>
+        </div>
+        <div class="overlay-text">
+            <h1>Welcome to BAUET</h1>
+            <p>Bangladesh Army University of Engineering & Technology - Shaping the Future Leaders</p>
+            <a href="https://bauet.ac.bd/admission/admission-information/" target="_blank" class="btn"><i class="fas fa-book"></i> Admission</a>
+            <a href="https://bauet.ac.bd/about/about-us/" target="_blank" class="btn"><i class="fas fa-info-circle"></i> Learn More</a>
+        </div>
+    </section>
+
+    <!-- Quick Access Section - Moved from footer to middle of page -->
+    <section class="quick-access-section">
+        <h2 class="section-title">Quick Access</h2>
+        <div class="grid-container">
+            <div class="grid-item" data-url="Home_Page.html">
+                <i class="fas fa-home"></i>
+                Home
+            </div>
+            <div class="grid-item" data-url="http://iems.bauet.ac.bd/">
+                <i class="fas fa-university"></i>
+                IEMS
+            </div>
+            <div class="grid-item" data-url="notice.html">
+                <i class="fas fa-bell"></i>
+                Notice
+            </div>
+            <div class="grid-item" data-url="https://bauet.ac.bd/academic/academic-calendar/">
+                <i class="fas fa-calendar-alt"></i>
+                Academic Calendar
+            </div>
+            <div class="grid-item" data-url="assignment.html">
+                <i class="fas fa-tasks"></i>
+                Submit Assignment
+            </div>
+            <div class="grid-item" data-url="evaluate_teachers.html">
+                <i class="fas fa-star"></i>
+                Evaluate Teachers
+            </div>
+            <div class="grid-item" data-url="library.html">
+                <i class="fas fa-book"></i>
+                Books & Library
+            </div>
+            <div class="grid-item" data-url="complaint.html">
+                <i class="fas fa-comment-alt"></i>
+                Complain
+            </div>
+            <div class="grid-item" data-url="http://iems.bauet.ac.bd/">
+                <i class="fas fa-clipboard-check"></i>
+                Attendance
+            </div>
+            <div class="grid-item" data-url="chat.html">
+                <i class="fas fa-comments"></i>
+                <h3>Chat</h3>
+            </div>
+            <div class="grid-item" data-url="club.html">
+                <i class="fas fa-users"></i>
+                Clubs
+            </div>
+            <div class="grid-item" data-url="teachers.html">
+                <i class="fas fa-chalkboard-teacher"></i>
+                Teachers Details
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <h2 class="section-title">Why Choose BAUET</h2>
+        <div class="features-container">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h3>Quality Education</h3>
+                <p>Experience excellence in education with our industry-focused curriculum and dedicated faculty members.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-flask"></i>
+                </div>
+                <h3>Advanced Research</h3>
+                <p>Access state-of-the-art laboratories and participate in cutting-edge research opportunities.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3>Vibrant Community</h3>
+                <p>Join a diverse community of students and engage in various clubs, events, and activities.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- News & Events Section -->
+    <section class="news-section">
+        <h2 class="section-title">Latest News & Events</h2>
+        <div class="news-container">
+            <div class="news-card">
+                <img src="H.jpg" alt="Tech Fest" class="news-image">
+                <div class="news-content">
+                    <div class="news-date">April 15, 2025</div>
+                    <h3 class="news-title">Annual Tech Fest Announced</h3>
+                    <p class="news-excerpt">Get ready for the biggest tech event of the year. Join us for workshops, hackathons, and exciting competitions.</p>
+                    <a href="https://bauet.ac.bd/category/news-events/" target="_blank" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="news-card">
+                <img src="FB_IMG_1672759986082.jpg" alt="Research Grant" class="news-image">
+                <div class="news-content">
+                    <div class="news-date">April 12, 2025</div>
+                    <h3 class="news-title">Research Grant Awarded</h3>
+                    <p class="news-excerpt">Our university has been awarded a prestigious research grant to develop sustainable energy solutions.</p>
+                    <a href="https://bauet.ac.bd/category/news-events/" target="_blank" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="news-card">
+                <img src="FB_IMG_1672759982601.jpg" alt="International Conference" class="news-image">
+                <div class="news-content">
+                    <div class="news-date">April 8, 2025</div>
+                    <h3 class="news-title">International Conference</h3>
+                    <p class="news-excerpt">BAUET to host an international conference on Engineering Innovation and Sustainability.</p>
+                    <a href="https://bauet.ac.bd/category/news-events/" target="_blank" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="news-card">
+                <img src="FB_IMG_1672759976687.jpg" alt="Campus Development" class="news-image">
+                <div class="news-content">
+                    <div class="news-date">April 5, 2025</div>
+                    <h3 class="news-title">New Campus Development</h3>
+                    <p class="news-excerpt">Exciting new developments in our campus infrastructure to enhance student experience.</p>
+                    <a href="https://bauet.ac.bd/category/news-events/" target="_blank" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Section -->
+    <section class="video-section">
+        <h2 class="section-title">Campus Tour</h2>
+        <div class="video-container">
+            <div class="video-wrapper">
+                <!-- YouTube embed from BAUET's channel -->
+                <iframe src="https://www.youtube.com/embed/Bv_R5GnlDGY" title="BAUET Campus Tour" allowfullscreen></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="stats-container">
+            <div class="stat-item">
+                <div class="stat-count">1586+</div>
+                <div class="stat-label">Students / Alumni</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-count">100+</div>
+                <div class="stat-label">Faculty Members</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-count">12</div>
+                <div class="stat-label">Departments</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-count">115+</div>
+                <div class="stat-label">Officers & Staff</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enhanced Footer -->
+    <footer>
+        <div class="footer-info">
+            <div class="footer-col">
+                <h3>About BAUET</h3>
+                <p>Bangladesh Army University of Engineering & Technology is committed to excellence in education, research, and innovation.</p>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/bauetqadirabad/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://twitter.com/bauet_official" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.instagram.com/bauet_official" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/company/bauet" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://www.youtube.com/@bauetnatore53" target="_blank"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="https://bauet.ac.bd/about/about-us/" target="_blank">About Us</a></li>
+                    <li><a href="https://bauet.ac.bd/admission/" target="_blank">Admission</a></li>
+                    <li><a href="https://bauet.ac.bd/research/" target="_blank">Research</a></li>
+                    <li><a href="https://bauet.ac.bd/category/news-events/" target="_blank">News & Events</a></li>
+                    <li><a href="https://bauet.ac.bd/career/" target="_blank">Career</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Resources</h3>
+                <ul>
+                    <li><a href="https://bauet.ac.bd/academic/academic-calendar/" target="_blank">Academic Calendar</a></li>
+                    <li><a href="https://bauet.ac.bd/facilities/bauet-central-library/" target="_blank">Library</a></li>
+                    <li><a href="http://iems.bauet.ac.bd/" target="_blank">I-EMS Portal</a></li>
+                    <li><a href="http://webmail.bauet.ac.bd/" target="_blank">Webmail</a></li>
+                    <li><a href="http://alumni.bauet.ac.bd/" target="_blank">Alumni</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Contact</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Qadirabad Cantonment, Natore, Bangladesh</p>
+                <p><i class="fas fa-phone"></i> +880 1708 503510</p>
+                <p><i class="fas fa-envelope"></i> info@bauet.ac.bd</p>
+            </div>
+        </div>
+
+        <div class="copyright">
+            © 2025 Bangladesh Army University of Engineering & Technology. All Rights Reserved.
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Navbar scroll effect
+            const navbar = document.querySelector('.navbar');
+            const heroSection = document.querySelector('.hero-section');
+            
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+
+            // Slider functionality
+            const slider = document.querySelector('.slider');
+            const slides = document.querySelectorAll('.slide');
+            const prevBtn = document.querySelector('.prev');
+            const nextBtn = document.querySelector('.next');
+            let currentSlide = 0;
+
+            // Initialize slider
+            function initSlider() {
+                if (slides.length > 0) {
+                    slides[0].classList.add('active');
+                    slides[0].style.opacity = 1;
+                }
+            }
+
+            // Show slide
+            function showSlide(index) {
+                slides.forEach(slide => {
+                    slide.classList.remove('active');
+                    slide.style.opacity = 0;
+                });
+                
+                slides[index].classList.add('active');
+                slides[index].style.opacity = 1;
+                currentSlide = index;
+            }
+
+            // Next slide
+            function nextSlide() {
+                let nextIndex = (currentSlide + 1) % slides.length;
+                showSlide(nextIndex);
+            }
+
+            // Previous slide
+            function prevSlide() {
+                let prevIndex = (currentSlide - 1 + slides.length) % slides.length;
+                showSlide(prevIndex);
+            }
+
+            // Auto slide
+            function autoSlide() {
+                nextSlide();
+            }
+
+            // Initialize slider if it exists
+            if (slider && slides.length > 0) {
+                initSlider();
+                
+                // Add event listeners for buttons
+                if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+                if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+                
+                // Set up auto slide
+                setInterval(autoSlide, 5000);
+            }
+
+            // Quick Access Grid Items
+            const gridItems = document.querySelectorAll('.grid-item');
+            
+            gridItems.forEach(item => {
+                // Add click handler
+                item.addEventListener('click', function() {
+                    const url = this.getAttribute('data-url');
+                    if (url) {
+                        if (url.startsWith('http')) {
+                            window.open(url, '_blank');
+                        } else {
+                            window.location.href = url;
+                        }
+                    }
+                });
+
+                // Add hover effects
+                item.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px)';
+                    this.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.1)';
+                });
+
+                item.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = 'none';
+                });
+            });
+
+            // Mobile Menu
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.querySelector('.nav-links');
+            const dropdowns = document.querySelectorAll('.dropdown');
+
+            if (hamburger) {
+                hamburger.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    navLinks.classList.toggle('active');
+                });
+            }
+
+            // Dropdown menus
+            dropdowns.forEach(dropdown => {
+                const toggle = dropdown.querySelector('.dropdown-toggle');
+                
+                toggle.addEventListener('click', function(e) {
+                    if (window.innerWidth <= 768) {
+                        e.preventDefault();
+                        dropdown.classList.toggle('active');
+                        
+                        // Close other dropdowns
+                        dropdowns.forEach(other => {
+                            if (other !== dropdown) {
+                                other.classList.remove('active');
+                            }
+                        });
+                    }
+                });
+            });
+
+            // Scroll Animations
+            const animatedElements = document.querySelectorAll('.feature-card, .news-card, .stat-item');
+            
+            function checkScroll() {
+                const triggerBottom = window.innerHeight * 0.8;
+                
+                animatedElements.forEach(element => {
+                    const elementTop = element.getBoundingClientRect().top;
+                    
+                    if (elementTop < triggerBottom) {
+                        element.classList.add('show');
+                    }
+                });
+            }
+
+            // Initial check
+            checkScroll();
+            
+            // Check on scroll
+            window.addEventListener('scroll', checkScroll);
+
+            // Video Section
+            const videoSection = document.querySelector('.video-section');
+            if (videoSection) {
+                const iframe = videoSection.querySelector('iframe');
+                if (iframe) {
+                    // Add responsive video wrapper
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'video-wrapper';
+                    iframe.parentNode.insertBefore(wrapper, iframe);
+                    wrapper.appendChild(iframe);
+                }
+            }
+
+            // Account dropdown toggle
+            const accountBtn = document.querySelector('.account-btn');
+            const accountDropdown = document.querySelector('.account-dropdown');
+
+            if (accountBtn && accountDropdown) {
+                accountBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    accountDropdown.classList.toggle('active');
+                });
+
+                // Close dropdown when clicking outside
+                document.addEventListener('click', function() {
+                    accountDropdown.classList.remove('active');
+                });
+
+                // Prevent dropdown from closing when clicking inside
+                accountDropdown.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+            }
+        });
+    </script>
+</body>
+</html>

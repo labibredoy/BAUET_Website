@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Submit Assignment - BAUET</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        .assignment-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        .assignment-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .assignment-header h1 {
+            color: var(--primary-color);
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        .assignment-header p {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--primary-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+            outline: none;
+        }
+
+        select.form-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 15px;
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .file-upload {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .file-upload-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 12px 15px;
+            background: #f8f9fa;
+            border: 1px dashed #ccc;
+            border-radius: 5px;
+            color: #555;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .file-upload-label:hover {
+            background: #f1f3f4;
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .file-upload-label i {
+            font-size: 1.5rem;
+            margin-right: 10px;
+        }
+
+        .file-upload input[type="file"] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .file-info {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }
+
+        .file-list {
+            margin-top: 15px;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .file-item i {
+            font-size: 1.2rem;
+            margin-right: 10px;
+            color: var(--accent-color);
+        }
+
+        .file-item .file-name {
+            flex-grow: 1;
+        }
+
+        .file-item .file-remove {
+            color: #e74c3c;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(to right, var(--accent-color), var(--secondary-color));
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .recent-submissions {
+            margin-top: 50px;
+        }
+
+        .recent-submissions h2 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .submission-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .submission-table th {
+            background-color: #f5f7fa;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .submission-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .submission-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .submission-status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status-submitted {
+            background-color: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .status-graded {
+            background-color: #e8f5e9;
+            color: #388e3c;
+        }
+
+        .status-late {
+            background-color: #ffebee;
+            color: #d32f2f;
+        }
+
+        @media screen and (max-width: 768px) {
+            .assignment-container {
+                padding: 20px;
+                margin: 20px;
+            }
+
+            .assignment-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .submission-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo-container">
+            <a href="Home_Page.html" style="display: flex; align-items: center; gap: 1rem; text-decoration: none; color: var(--text-color);">
+                <img src="L.png" alt="University Logo" style="height: 50px; width: auto;">
+                <div class="logo-text">
+                    <h2>BAUET</h2>
+                    <p>Bangladesh Army University of Engineering & Technology</p>
+                </div>
+            </a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="Home_Page.html"><i class="fas fa-home"></i> Home</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle"><i class="fas fa-user"></i> Profile <i class="fas fa-chevron-down"></i></a>
+                <ul class="dropdown-menu">
+                    <li><a href="profile.html"><i class="fas fa-id-card"></i> Student Profile</a></li>
+                    <li><a href="profile.html#academic-info"><i class="fas fa-user-graduate"></i> Academic Info</a></li>
+                    <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+                </ul>
+            </li>
+            <li><a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+            <li><a href="signup.html"><i class="fas fa-user-plus"></i> Sign Up</a></li>
+            <li class="dropdown menu-dropdown">
+                <a href="#" class="dropdown-toggle"><i class="fas fa-bars"></i> Menu <i class="fas fa-chevron-down"></i></a>
+                <ul class="dropdown-menu mega-menu">
+                    <div class="mega-menu-content">
+                        <div class="mega-menu-column">
+                            <h3>Academics</h3>
+                            <ul>
+                                <li><a href="https://bauet.ac.bd/academic/" target="_blank"><i class="fas fa-graduation-cap"></i> Programs</a></li>
+                                <li><a href="https://bauet.ac.bd/academic/academic-calendar/" target="_blank"><i class="fas fa-book"></i> Academic Calendar</a></li>
+                                <li><a href="https://bauet.ac.bd/academic/academic-regulations/" target="_blank"><i class="fas fa-calendar-alt"></i> Academic Regulations</a></li>
+                                <li><a href="https://bauet.ac.bd/academic/faculty/" target="_blank"><i class="fas fa-chalkboard-teacher"></i> Faculty</a></li>
+                            </ul>
+                        </div>
+                        <div class="mega-menu-column">
+                            <h3>Student Life</h3>
+                            <ul>
+                                <li><a href="club.html"><i class="fas fa-users"></i> Clubs</a></li>
+                                <li><a href="https://bauet.ac.bd/facilities/games-sports-gymnasium-club/" target="_blank"><i class="fas fa-futbol"></i> Sports</a></li>
+                                <li><a href="https://bauet.ac.bd/category/news-events/" target="_blank"><i class="fas fa-medal"></i> Achievements</a></li>
+                                <li><a href="https://bauet.ac.bd/facilities/residential-hall/" target="_blank"><i class="fas fa-building"></i> Housing</a></li>
+                            </ul>
+                        </div>
+                        <div class="mega-menu-column">
+                            <h3>Student Services</h3>
+                            <ul>
+                                <li><a href="assignment.html"><i class="fas fa-tasks"></i> Submit Assignment</a></li>
+                                <li><a href="complaint.html"><i class="fas fa-comment-alt"></i> Submit Complaint</a></li>
+                                <li><a href="#"><i class="fas fa-clipboard-check"></i> Attendance</a></li>
+                                <li><a href="#"><i class="fas fa-clock"></i> Routine</a></li>
+                            </ul>
+                        </div>
+                        <div class="mega-menu-column">
+                            <h3>Administration</h3>
+                            <ul>
+                                <li><a href="https://bauet.ac.bd/administration/chancellor/" target="_blank"><i class="fas fa-sitemap"></i> Chancellor</a></li>
+                                <li><a href="https://bauet.ac.bd/administration/vice-chancellor/" target="_blank"><i class="fas fa-landmark"></i> Vice Chancellor</a></li>
+                                <li><a href="https://bauet.ac.bd/administration/syndicate-of-bauet/" target="_blank"><i class="fas fa-file-alt"></i> Syndicate</a></li>
+                                <li><a href="https://bauet.ac.bd/contact-us/" target="_blank"><i class="fas fa-phone"></i> Contact Us</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </ul>
+            </li>
+        </ul>
+        <div class="hamburger">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="assignment-container">
+        <div class="assignment-header">
+            <h1>Submit Assignment</h1>
+            <p>Upload your assignments for evaluation by your instructors</p>
+        </div>
+
+        <form id="assignmentForm" onsubmit="submitAssignment(event)">
+            <div class="form-group">
+                <label for="course">Course</label>
+                <select id="course" class="form-control" required>
+                    <option value="" disabled selected>Select your course</option>
+                    <option value="CSE401">CSE401 - Software Engineering</option>
+                    <option value="CSE410">CSE410 - Artificial Intelligence</option>
+                    <option value="CSE422">CSE422 - Computer Networks</option>
+                    <option value="CSE450">CSE450 - Data Mining</option>
+                    <option value="GED305">GED305 - Professional Ethics</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="assignment">Assignment</label>
+                <select id="assignment" class="form-control" required>
+                    <option value="" disabled selected>Select assignment</option>
+                    <option value="A1">Assignment 1</option>
+                    <option value="A2">Assignment 2</option>
+                    <option value="A3">Assignment 3</option>
+                    <option value="Project">Project Submission</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="title">Assignment Title</label>
+                <input type="text" id="title" class="form-control" placeholder="Enter assignment title" required>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description/Comments</label>
+                <textarea id="description" class="form-control" placeholder="Add any comments or notes about your submission..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Upload Files</label>
+                <div class="file-upload">
+                    <label for="fileUpload" class="file-upload-label">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <span>Drag & drop files or click to browse</span>
+                    </label>
+                    <input type="file" id="fileUpload" multiple onChange="handleFileSelect(event)">
+                </div>
+                <div class="file-info">Supported formats: PDF, DOC, DOCX, PPT, PPTX, ZIP, RAR (Max: 25MB)</div>
+                <div id="fileList" class="file-list"></div>
+            </div>
+
+            <button type="submit" class="submit-btn">Submit Assignment</button>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-info">
+            <div class="footer-col">
+                <h3>About BAUET</h3>
+                <p>Bangladesh Army University of Engineering & Technology is committed to excellence in education, research, and innovation.</p>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/bauetqadirabad/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://twitter.com/bauet_official" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.instagram.com/bauet_official" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/company/bauet" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://www.youtube.com/@bauetnatore53" target="_blank"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="https://bauet.ac.bd/about/about-us/" target="_blank">About Us</a></li>
+                    <li><a href="https://bauet.ac.bd/admission/" target="_blank">Admission</a></li>
+                    <li><a href="https://bauet.ac.bd/research/" target="_blank">Research</a></li>
+                    <li><a href="https://bauet.ac.bd/category/news-events/" target="_blank">News & Events</a></li>
+                    <li><a href="https://bauet.ac.bd/career/" target="_blank">Career</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Resources</h3>
+                <ul>
+                    <li><a href="https://bauet.ac.bd/academic/academic-calendar/" target="_blank">Academic Calendar</a></li>
+                    <li><a href="https://bauet.ac.bd/facilities/bauet-central-library/" target="_blank">Library</a></li>
+                    <li><a href="http://iems.bauet.ac.bd/" target="_blank">I-EMS Portal</a></li>
+                    <li><a href="http://webmail.bauet.ac.bd/" target="_blank">Webmail</a></li>
+                    <li><a href="http://alumni.bauet.ac.bd/" target="_blank">Alumni</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Contact</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Qadirabad Cantonment, Natore, Bangladesh</p>
+                <p><i class="fas fa-phone"></i> +880 1708 503510</p>
+                <p><i class="fas fa-envelope"></i> info@bauet.ac.bd</p>
+            </div>
+        </div>
+
+        <div class="copyright">
+            © 2025 Bangladesh Army University of Engineering & Technology. All Rights Reserved.
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Handle file selection
+        function handleFileSelect(event) {
+            const files = event.target.files;
+            const fileList = document.getElementById('fileList');
+            fileList.innerHTML = '';
+
+            // Check total file size
+            let totalSize = 0;
+            for (let i = 0; i < files.length; i++) {
+                totalSize += files[i].size;
+            }
+
+            // Check if total size exceeds 25MB
+            if (totalSize > 25 * 1024 * 1024) {
+                alert("Total file size cannot exceed 25MB");
+                event.target.value = ''; // Clear the file input
+                return;
+            }
+
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                
+                // Determine icon based on file type
+                let iconClass = 'fa-file';
+                if (file.name.endsWith('.pdf')) iconClass = 'fa-file-pdf';
+                else if (file.name.endsWith('.doc') || file.name.endsWith('.docx')) iconClass = 'fa-file-word';
+                else if (file.name.endsWith('.ppt') || file.name.endsWith('.pptx')) iconClass = 'fa-file-powerpoint';
+                else if (file.name.endsWith('.zip') || file.name.endsWith('.rar')) iconClass = 'fa-file-archive';
+                
+                fileItem.innerHTML = `
+                    <i class="fas ${iconClass}"></i>
+                    <span class="file-name">${file.name} (${formatFileSize(file.size)})</span>
+                    <span class="file-remove" onclick="removeFile(this)"><i class="fas fa-times"></i></span>
+                `;
+                fileList.appendChild(fileItem);
+            }
+        }
+
+        // Format file size
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        // Remove file from list
+        function removeFile(element) {
+            element.parentElement.remove();
+        }
+
+        // Submit assignment
+        function submitAssignment(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            
+            // Get form values
+            const course = document.getElementById('course').value;
+            const assignment = document.getElementById('assignment').value;
+            const title = document.getElementById('title').value;
+            const description = document.getElementById('description').value;
+            
+            // Validate required fields
+            if (!course || !assignment || !title) {
+                alert("Please fill in all required fields (Course, Assignment, and Title)");
+                return false;
+            }
+            
+            // Get file list
+            const fileItems = document.querySelectorAll('.file-item');
+            const files = Array.from(fileItems).map(item => item.querySelector('.file-name').textContent);
+            
+            if (files.length === 0) {
+                alert("Please upload at least one file for your assignment");
+                return false;
+            }
+            
+            // In a real application, you would send this data to your server
+            console.log("Assignment submission:", { course, assignment, title, description, files });
+            
+            // Show success message
+            alert("Assignment submitted successfully!");
+            
+            // Reset form
+            document.getElementById('assignmentForm').reset();
+            document.getElementById('fileList').innerHTML = '';
+            
+            return false;
+        }
+    </script>
+</body>
+</html>

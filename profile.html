@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Profile - BAUET</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
+    
+    <script>
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAlwzFpnEp9LIdd_l7rPXnzglDoM6jcIIg",
+            authDomain: "login-form-6e9ee.firebaseapp.com",
+            projectId: "login-form-6e9ee",
+            storageBucket: "login-form-6e9ee.appspot.com",
+            messagingSenderId: "932029152336",
+            appId: "1:932029152336:web:bab8763a328b964bede555"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
+    <style>
+        /* Profile Page Specific Styles */
+        .profile-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        
+        .profile-header {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .profile-avatar-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin-right: 30px;
+            flex-shrink: 0;
+        }
+        
+        .profile-avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 5px solid white;
+            object-fit: cover;
+            transition: opacity 0.3s ease;
+        }
+        
+        .avatar-overlay {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .avatar-overlay:hover {
+            background: rgba(0, 0, 0, 0.7);
+        }
+        
+        .upload-btn {
+            color: white;
+            cursor: pointer;
+        }
+        
+        .upload-btn i {
+            font-size: 1.2rem;
+        }
+        
+        .profile-info h1 {
+            font-size: 2.2rem;
+            margin-bottom: 5px;
+        }
+        
+        .profile-info p {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+        
+        .profile-badges {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .badge {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .badge i {
+            margin-right: 5px;
+        }
+        
+        .profile-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+        }
+        
+        .profile-sidebar {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            padding: 20px;
+            height: fit-content;
+        }
+        
+        .sidebar-section {
+            margin-bottom: 30px;
+        }
+        
+        .sidebar-section h3 {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--accent-color);
+        }
+        
+        .profile-stat {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .profile-stat:last-child {
+            border-bottom: none;
+        }
+        
+        .profile-progress {
+            height: 10px;
+            background: #eee;
+            border-radius: 5px;
+            margin-top: 5px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: var(--accent-color);
+            border-radius: 5px;
+        }
+        
+        .contact-info i {
+            width: 25px;
+            color: var(--accent-color);
+        }
+        
+        .contact-info p {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .profile-main {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .profile-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            padding: 25px;
+        }
+        
+        .profile-card h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent-color);
+            font-size: 1.5rem;
+        }
+        
+        .academic-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .academic-item {
+            margin-bottom: 15px;
+        }
+        
+        .academic-item label {
+            font-weight: bold;
+            color: #555;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .academic-item p {
+            color: var(--text-color);
+        }
+        
+        .course-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        
+        .course-table th {
+            background-color: #f5f5f5;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .course-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .course-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .grade-a {
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .grade-b {
+            color: #17a2b8;
+            font-weight: bold;
+        }
+        
+        .grade-c {
+            color: #ffc107;
+            font-weight: bold;
+        }
+        
+        .activity-item {
+            display: flex;
+            margin-bottom: 20px;
+            align-items: flex-start;
+        }
+        
+        .activity-icon {
+            background-color: #f0f8ff;
+            color: var(--accent-color);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        
+        .activity-content h4 {
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+        
+        .activity-time {
+            font-size: 0.85rem;
+            color: #777;
+            margin-bottom: 5px;
+        }
+        
+        @media screen and (max-width: 992px) {
+            .profile-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .academic-info {
+                grid-template-columns: 1fr;
+            }
+            
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .profile-avatar {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+            
+            .profile-badges {
+                justify-content: center;
+            }
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 500px;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            right: 20px;
+            top: 10px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--text-color);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo-container">
+            <a href="Home_Page.html" style="display: flex; align-items: center; gap: 1rem; text-decoration: none; color: var(--text-color);">
+                <img src="L.png" alt="University Logo" style="height: 50px; width: auto;">
+                <div class="logo-text">
+                    <h2>BAUET</h2>
+                    <p>Bangladesh Army University of Engineering & Technology</p>
+                </div>
+            </a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="Home_Page.html"><i class="fas fa-home"></i> Home</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle"><i class="fas fa-user"></i> Profile <i class="fas fa-chevron-down"></i></a>
+                <ul class="dropdown-menu">
+                    <li><a href="profile.html"><i class="fas fa-id-card"></i> Student Profile</a></li>
+                    <li><a href="profile.html#academic-info"><i class="fas fa-user-graduate"></i> Academic Info</a></li>
+                    <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+                </ul>
+            </li>
+            <li><a href="chat.html"><i class="fas fa-comments"></i> Chat</a></li>
+            <li><a href="login.html" id="navLogoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+        </ul>
+        <div class="hamburger">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+    </nav>
+
+    <div class="profile-container">
+        <div class="profile-header">
+            <div class="profile-avatar-container">
+                <img src="L.png" alt="Profile Avatar" class="profile-avatar" id="profileAvatar">
+                <div class="avatar-overlay">
+                    <label for="profilePicUpload" class="upload-btn">
+                        <i class="fas fa-camera"></i>
+                    </label>
+                    <input type="file" id="profilePicUpload" accept="image/*" style="display: none;">
+                </div>
+            </div>
+            <div class="profile-info">
+                <h1 id="profileName">Loading...</h1>
+                <p id="profileEmail">Loading...</p>
+                <p id="profileId">Loading...</p>
+                <p id="profileDepartment">Loading...</p>
+                <div class="profile-badges">
+                    <span class="badge"><i class="fas fa-user-graduate"></i> Student</span>
+                    <span class="badge"><i class="fas fa-university"></i> BAUET</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-content">
+            <div class="profile-sidebar">
+                <div class="sidebar-section">
+                    <h3>Academic Information</h3>
+                    <div class="academic-info">
+                        <div class="academic-item">
+                            <label>Student ID</label>
+                            <p id="studentIdValue">Loading...</p>
+                        </div>
+                        <div class="academic-item">
+                            <label>Department</label>
+                            <p id="departmentValue">Loading...</p>
+                        </div>
+                        <div class="academic-item">
+                            <label>Email</label>
+                            <p id="emailValue">Loading...</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h3>Account Actions</h3>
+                    <button id="logoutBtn" class="auth-btn" style="width: 100%; margin-top: 10px;">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+            </div>
+
+            <div class="profile-main">
+                <div class="profile-card">
+                    <h2>Profile Overview</h2>
+                    <p>Welcome to your student profile at BAUET. Here you can view and manage your academic information.</p>
+                    <button id="editProfileBtn" class="auth-btn" style="margin-top: 15px;">
+                        <i class="fas fa-edit"></i> Edit Profile
+                    </button>
+                </div>
+                
+                <!-- Edit Profile Modal -->
+                <div id="editProfileModal" class="modal" style="display: none;">
+                    <div class="modal-content">
+                        <span class="close-modal">&times;</span>
+                        <h2>Edit Profile</h2>
+                        <form id="editProfileForm">
+                            <div class="form-group">
+                                <label for="editFullName">Full Name</label>
+                                <input type="text" id="editFullName" name="fullName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editStudentId">Student ID</label>
+                                <input type="text" id="editStudentId" name="studentId" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editDepartment">Department</label>
+                                <input type="text" id="editDepartment" name="department" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editEmail">Email</label>
+                                <input type="email" id="editEmail" name="email" required>
+                            </div>
+                            <button type="submit" class="auth-btn">Save Changes</button>
+                        </form>
+                    </div>
+                </div>
+                
+                <!-- Academic Information -->
+                <div id="academic-info" class="profile-card">
+                    <h2><i class="fas fa-user-graduate"></i> Academic Information</h2>
+                    <div class="academic-info">
+                        <div>
+                            <div class="academic-item">
+                                <label>Department</label>
+                                <p id="departmentValue2">Loading...</p>
+                            </div>
+                            <div class="academic-item">
+                                <label>Program</label>
+                                <p>B.Sc. in Computer Science and Engineering</p>
+                            </div>
+                            <div class="academic-item">
+                                <label>Academic Status</label>
+                                <p>Regular</p>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="academic-item">
+                                <label>Enrollment Year</label>
+                                <p>2022</p>
+                            </div>
+                            <div class="academic-item">
+                                <label>Expected Graduation</label>
+                                <p>2026</p>
+                            </div>
+                            <div class="academic-item">
+                                <label>Advisor</label>
+                                <p>Md. Omar Faruque</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile JS -->
+    <script src="profile.js"></script>
+</body>
+</html> 

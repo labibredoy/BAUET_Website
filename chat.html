@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat - BAUET</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.x.x/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.x.x/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.x.x/firebase-firestore-compat.js"></script>
+    <style>
+        .chat-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 1rem;
+            height: 80vh;
+        }
+
+        .chat-sidebar {
+            background: #f8f8f8;
+            border-radius: 8px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .chat-main {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .chat-header {
+            text-align: center;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-header .back-button {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            display: none;
+        }
+
+        .chat-header .back-button.visible {
+            display: block;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            background: #fff;
+        }
+
+        .message {
+            margin-bottom: 1rem;
+            padding: 0.8rem;
+            border-radius: 8px;
+            max-width: 70%;
+            position: relative;
+        }
+
+        .message.sent {
+            background-color: var(--primary-color);
+            color: white;
+            margin-left: auto;
+        }
+
+        .message.received {
+            background-color: #f0f0f0;
+            color: var(--text-color);
+        }
+
+        .message .timestamp {
+            font-size: 0.7rem;
+            opacity: 0.7;
+            margin-top: 0.3rem;
+        }
+
+        .message .sender {
+            font-weight: bold;
+            margin-bottom: 0.3rem;
+        }
+
+        .message .status {
+            font-size: 0.7rem;
+            opacity: 0.7;
+            margin-top: 0.3rem;
+            text-align: right;
+        }
+
+        .message .status i {
+            margin-left: 0.3rem;
+        }
+
+        .message .status .delivered {
+            color: #4CAF50;
+        }
+
+        .message .status .seen {
+            color: #2196F3;
+        }
+
+        .chat-input {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            background: #f8f8f8;
+            border-radius: 8px;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .chat-input button {
+            padding: 0.8rem 1.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .chat-input button:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .online-users {
+            margin-bottom: 1rem;
+        }
+
+        .online-users h3 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .user-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .user-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-bottom: 0.5rem;
+        }
+
+        .user-item:hover {
+            background-color: #eee;
+        }
+
+        .user-item.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .user-item .user-info {
+            flex: 1;
+        }
+
+        .user-item .user-name {
+            font-weight: bold;
+        }
+
+        .user-item .user-email {
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        .unread-badge {
+            background-color: #ff4444;
+            color: white;
+            border-radius: 50%;
+            padding: 0.2rem 0.5rem;
+            font-size: 0.8rem;
+            margin-left: auto;
+        }
+
+        .user-status {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #4CAF50;
+        }
+
+        .user-status.offline {
+            background-color: #ccc;
+        }
+
+        .typing-indicator {
+            padding: 0.5rem;
+            font-style: italic;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .typing-indicator span {
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0% { opacity: 0.2; }
+            20% { opacity: 1; }
+            100% { opacity: 0.2; }
+        }
+
+        .login-prompt {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .login-prompt button {
+            padding: 0.8rem 1.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo-container">
+            <a href="Home_Page.html" style="display: flex; align-items: center; gap: 1rem; text-decoration: none; color: var(--text-color);">
+                <img src="L.png" alt="University Logo" style="height: 50px; width: auto;">
+                <div class="logo-text">
+                    <h2>BAUET</h2>
+                    <p>Bangladesh Army University of Engineering & Technology</p>
+                </div>
+            </a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="Home_Page.html"><i class="fas fa-home"></i> Home</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle"><i class="fas fa-user"></i> Profile <i class="fas fa-chevron-down"></i></a>
+                <ul class="dropdown-menu">
+                    <li><a href="profile.html"><i class="fas fa-id-card"></i> Student Profile</a></li>
+                    <li><a href="profile.html#academic-info"><i class="fas fa-user-graduate"></i> Academic Info</a></li>
+                    <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+                </ul>
+            </li>
+            <li><a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+            <li><a href="signup.html"><i class="fas fa-user-plus"></i> Sign Up</a></li>
+        </ul>
+        <div class="hamburger">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+    </nav>
+
+    <!-- Chat Section -->
+    <div class="chat-container">
+        <div class="chat-sidebar">
+            <div class="online-users">
+                <h3><i class="fas fa-users"></i> Online Users</h3>
+                <div class="user-list" id="userList">
+                    <!-- Users will be populated here -->
+                </div>
+            </div>
+        </div>
+        <div class="chat-main">
+            <div class="chat-header">
+                <button class="back-button" id="backButton" onclick="showAllMessages()">
+                    <i class="fas fa-arrow-left"></i> Back
+                </button>
+                <div>
+                    <h1 id="chatTitle">BAUET Chat</h1>
+                    <p id="currentUser">Not logged in</p>
+                </div>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <!-- Messages will be populated here -->
+            </div>
+            <div class="chat-input">
+                <input type="text" id="messageInput" placeholder="Type your message here..." />
+                <button onclick="sendMessage()">
+                    <i class="fas fa-paper-plane"></i> Send
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAlwzFpnEp9LIdd_l7rPXnzglDoM6jcIIg",
+            authDomain: "login-form-6e9ee.firebaseapp.com",
+            projectId: "login-form-6e9ee",
+            storageBucket: "login-form-6e9ee.appspot.com",
+            messagingSenderId: "932029152336",
+            appId: "1:932029152336:web:bab8763a328b964bede555"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const auth = firebase.auth();
+
+        let currentUser = null;
+        let typingTimeout = null;
+        let currentChat = null;
+        let unreadMessages = {};
+        let typingUsers = {};
+
+        // Initialize chat functionality when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add event listener for send message button
+            const sendButton = document.querySelector('.chat-input button');
+            if (sendButton) {
+                sendButton.addEventListener('click', sendMessage);
+            }
+
+            // Add event listener for message input
+            const messageInput = document.getElementById('messageInput');
+            if (messageInput) {
+                messageInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        sendMessage();
+                    }
+                });
+            }
+
+            // Add event listener for back button
+            const backButton = document.getElementById('backButton');
+            if (backButton) {
+                backButton.addEventListener('click', showAllMessages);
+            }
+        });
+
+        // Check authentication state
+        auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                try {
+                    // Get user data from Firestore
+                    const userDoc = await db.collection("users").doc(user.uid).get();
+                    if (userDoc.exists) {
+                        const userData = userDoc.data();
+                        currentUser = {
+                            uid: user.uid,
+                            email: userData.email,
+                            fullName: userData.fullName
+                        };
+                        document.getElementById('currentUser').textContent = `Logged in as ${userData.fullName || userData.email}`;
+                        loadUsers();
+                        updateUserStatus(true);
+                        setupTypingListener();
+                        setupMessageListener(); // Initialize message listener
+                    } else {
+                        console.log("No user data found in Firestore");
+                        window.location.href = 'login.html';
+                    }
+                } catch (error) {
+                    console.error("Error fetching user data:", error);
+                    window.location.href = 'login.html';
+                }
+            } else {
+                currentUser = null;
+                document.getElementById('currentUser').textContent = 'Not logged in';
+                document.getElementById('chatMessages').innerHTML = `
+                    <div class="login-prompt">
+                        <h3>Please log in to chat</h3>
+                        <p>You need to be logged in to use the chat feature.</p>
+                        <button onclick="window.location.href='login.html'">Login</button>
+                    </div>
+                `;
+                document.querySelector('.chat-input').style.display = 'none';
+            }
+        });
+
+        // Update user status in Firebase
+        function updateUserStatus(isOnline) {
+            if (currentUser) {
+                db.collection('users').doc(currentUser.uid).set({
+                    email: currentUser.email,
+                    fullName: currentUser.fullName,
+                    lastSeen: firebase.firestore.FieldValue.serverTimestamp(),
+                    isOnline: isOnline,
+                    name: currentUser.fullName || currentUser.email.split('@')[0]
+                }, { merge: true });
+            }
+        }
+
+        // Load users
+        function loadUsers() {
+            if (!currentUser) return;
+
+            db.collection('users')
+                .where('email', '!=', currentUser.email)
+                .onSnapshot((snapshot) => {
+                    const userList = document.getElementById('userList');
+                    userList.innerHTML = '';
+                    snapshot.forEach((doc) => {
+                        const user = doc.data();
+                        const userElement = document.createElement('div');
+                        userElement.className = 'user-item';
+                        userElement.innerHTML = `
+                            <div class="user-status ${user.isOnline ? '' : 'offline'}"></div>
+                            <div class="user-info">
+                                <div class="user-name">${user.fullName || user.email.split('@')[0]}</div>
+                                <div class="user-email">${user.email}</div>
+                            </div>
+                            ${unreadMessages[doc.id] ? `<span class="unread-badge">${unreadMessages[doc.id]}</span>` : ''}
+                        `;
+                        userElement.onclick = () => startChat(doc.id, user);
+                        userList.appendChild(userElement);
+                    });
+                });
+        }
+
+        // Setup typing indicator listener
+        function setupTypingListener() {
+            if (currentChat) {
+                db.collection('users').doc(currentChat)
+                    .onSnapshot((doc) => {
+                        const userData = doc.data();
+                        if (userData.isTyping) {
+                            showTypingIndicator(userData.email);
+                        } else {
+                            hideTypingIndicator();
+                        }
+                    });
+            }
+        }
+
+        // Show typing indicator
+        function showTypingIndicator(userEmail) {
+            let typingDiv = document.querySelector('.typing-indicator');
+            if (!typingDiv) {
+                typingDiv = document.createElement('div');
+                typingDiv.className = 'typing-indicator';
+                document.getElementById('chatMessages').appendChild(typingDiv);
+            }
+            typingDiv.innerHTML = `${userEmail.split('@')[0]} is typing<span>.</span><span>.</span><span>.</span>`;
+        }
+
+        // Hide typing indicator
+        function hideTypingIndicator() {
+            const typingDiv = document.querySelector('.typing-indicator');
+            if (typingDiv) {
+                typingDiv.remove();
+            }
+        }
+
+        // Create message element
+        function createMessageElement(message) {
+            const div = document.createElement('div');
+            div.className = `message ${message.userId === currentUser?.uid ? 'sent' : 'received'}`;
+            
+            const sender = document.createElement('div');
+            sender.className = 'sender';
+            sender.textContent = message.userEmail;
+            
+            const content = document.createElement('div');
+            content.className = 'content';
+            content.textContent = message.text;
+            
+            const timestamp = document.createElement('div');
+            timestamp.className = 'timestamp';
+            timestamp.textContent = new Date(message.timestamp?.toDate() || Date.now()).toLocaleTimeString();
+
+            const status = document.createElement('div');
+            status.className = 'status';
+            if (message.userId === currentUser?.uid) {
+                status.innerHTML = `
+                    <i class="fas fa-check"></i>
+                    ${message.delivered ? '<i class="fas fa-check delivered"></i>' : ''}
+                    ${message.seen ? '<i class="fas fa-eye seen"></i>' : ''}
+                `;
+            }
+            
+            div.appendChild(sender);
+            div.appendChild(content);
+            div.appendChild(timestamp);
+            div.appendChild(status);
+            
+            return div;
+        }
+
+        // Send message function
+        function sendMessage() {
+            if (!currentUser) {
+                alert('Please log in to send messages');
+                return;
+            }
+
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            
+            if (message) {
+                const messageData = {
+                    text: message,
+                    userId: currentUser.uid,
+                    userEmail: currentUser.email,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    delivered: false,
+                    seen: false
+                };
+
+                if (currentChat) {
+                    messageData.type = 'direct';
+                    messageData.participants = [currentUser.uid, currentChat].sort().join('_');
+                } else {
+                    messageData.type = 'general';
+                }
+
+                db.collection('messages').add(messageData)
+                    .then(() => {
+                        input.value = '';
+                        // Update delivery status
+                        if (currentChat) {
+                            db.collection('messages')
+                                .where('participants', '==', messageData.participants)
+                                .where('userId', '==', currentUser.uid)
+                                .orderBy('timestamp', 'desc')
+                                .limit(1)
+                                .get()
+                                .then((snapshot) => {
+                                    if (!snapshot.empty) {
+                                        const messageDoc = snapshot.docs[0];
+                                        messageDoc.ref.update({
+                                            delivered: true
+                                        });
+                                    }
+                                });
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error sending message:", error);
+                        alert("Failed to send message. Please try again.");
+                    });
+            }
+        }
+
+        // Start chat with user
+        function startChat(userId, userData) {
+            currentChat = userId;
+            document.getElementById('backButton').classList.add('visible');
+            document.getElementById('chatTitle').textContent = `Chat with ${userData.fullName || userData.email.split('@')[0]}`;
+            setupMessageListener(userId);
+            setupTypingListener();
+            unreadMessages[userId] = 0;
+            loadUsers();
+        }
+
+        // Show all messages
+        function showAllMessages() {
+            currentChat = null;
+            document.getElementById('backButton').classList.remove('visible');
+            document.getElementById('chatTitle').textContent = 'BAUET Chat';
+            setupMessageListener();
+            hideTypingIndicator();
+        }
+
+        // Setup message listener
+        function setupMessageListener(userId = null) {
+            let query = db.collection('messages');
+            
+            if (userId) {
+                query = query.where('participants', 'array-contains', [currentUser.uid, userId].sort().join('_'));
+            } else {
+                query = query.where('type', '==', 'general');
+            }
+            
+            query.orderBy('timestamp')
+                .onSnapshot((snapshot) => {
+                    const messages = document.getElementById('chatMessages');
+                    messages.innerHTML = ''; // Clear existing messages
+                    snapshot.forEach((doc) => {
+                        const message = doc.data();
+                        if (message.userId !== currentUser?.uid) {
+                            // Mark message as seen
+                            doc.ref.update({
+                                seen: true
+                            });
+                        }
+                        const messageElement = createMessageElement(message);
+                        messages.appendChild(messageElement);
+                    });
+                    messages.scrollTop = messages.scrollHeight;
+                });
+        }
+
+        // Handle typing indicator
+        document.getElementById('messageInput').addEventListener('input', () => {
+            if (typingTimeout) clearTimeout(typingTimeout);
+            
+            if (currentUser && currentChat) {
+                db.collection('users').doc(currentUser.uid).update({
+                    isTyping: true
+                });
+                
+                typingTimeout = setTimeout(() => {
+                    db.collection('users').doc(currentUser.uid).update({
+                        isTyping: false
+                    });
+                }, 1000);
+            }
+        });
+
+        // Update user status when leaving
+        window.addEventListener('beforeunload', () => {
+            updateUserStatus(false);
+        });
+    </script>
+</body>
+</html> 

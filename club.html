@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BAUET Clubs | Bangladesh Army University of Engineering & Technology</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), url('AA.png') no-repeat center center fixed;
+      background-size: cover;
+      position: relative;
+      color: white;
+    }
+
+    header {
+      padding: 1.5rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      z-index: 10;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .logo img {
+      height: 50px;
+      width: auto;
+    }
+
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .logo-text h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .logo-text p {
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+
+    nav ul {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+      font-size: 1rem;
+      position: relative;
+      padding: 0.5rem 0;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background: linear-gradient(90deg, #3498db, #9b59b6);
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    nav a:hover {
+      color: #3498db;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      padding: 60px 20px;
+      text-align: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .hero-section {
+      margin-bottom: 60px;
+    }
+
+    h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      background: linear-gradient(90deg, #3498db, #9b59b6, #2ecc71);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 1px;
+    }
+
+    .subtitle {
+      font-size: 1.4rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      font-weight: 300;
+    }
+
+    .club-section {
+      position: relative;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+      display: inline-block;
+      padding-bottom: 10px;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, #3498db, #9b59b6);
+    }
+
+    .club-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 30px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .club-card {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 2rem;
+      transition: all 0.4s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .club-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, #3498db, #9b59b6);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+
+    .club-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .club-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .club-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+      color: #3498db;
+      transition: all 0.3s ease;
+    }
+
+    .club-card:hover .club-icon {
+      transform: scale(1.1);
+      color: #9b59b6;
+    }
+
+    .club-name {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+      transition: all 0.3s ease;
+    }
+
+    .club-description {
+      opacity: 0.8;
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .club-link {
+      margin-top: auto;
+      background: linear-gradient(90deg, #3498db, #9b59b6);
+      color: white;
+      text-decoration: none;
+      padding: 0.7rem 1.5rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      display: inline-block;
+    }
+
+    .club-link:hover {
+      background: linear-gradient(90deg, #9b59b6, #3498db);
+      transform: translateY(-3px);
+      box-shadow: 0 7px 14px rgba(0, 0, 0, 0.3);
+    }
+
+    footer {
+      margin-top: 80px;
+      padding: 30px 20px;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(10px);
+      text-align: center;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .footer-logo img {
+      height: 40px;
+    }
+
+    .footer-logo span {
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 15px;
+    }
+
+    .social-links a {
+      color: white;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+    }
+
+    .social-links a:hover {
+      color: #3498db;
+      transform: translateY(-3px);
+    }
+
+    .copyright {
+      width: 100%;
+      margin-top: 20px;
+      opacity: 0.7;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.5rem;
+      }
+
+      .subtitle {
+        font-size: 1.1rem;
+      }
+
+      nav ul {
+        gap: 1rem;
+      }
+
+      .club-container {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      }
+
+      .footer-content {
+        flex-direction: column;
+        gap: 30px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header {
+        flex-direction: column;
+        padding: 1rem;
+      }
+
+      .logo {
+        margin-bottom: 1rem;
+      }
+
+      nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      .section-title {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <a href="Home_Page.html" style="display: flex; align-items: center; gap: 1rem; text-decoration: none; color: white;">
+        <img src="L.png" alt="University Logo" style="height: 50px; width: auto;">
+        <div class="logo-text">
+          <h2>BAUET</h2>
+          <p>Bangladesh Army University of Engineering & Technology</p>
+        </div>
+      </a>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="Home_Page.html">Home</a></li>
+        <li><a href="profile.html">Profile</a></li>
+        <li><a href="club.html">Clubs</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="signup.html">Sign Up</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="container">
+    <div class="hero-section">
+      <h1>BAUET Student Clubs</h1>
+      <p class="subtitle">Explore our diverse student organizations and find your community at Bangladesh Army University of Engineering & Technology</p>
+    </div>
+
+    <div class="club-section">
+      <h2 class="section-title">Our Clubs</h2>
+      <div class="club-container">
+        <div class="club-card" onclick="redirect('https://www.facebook.com/BAUET.Computer.Society')">
+          <i class="fas fa-laptop-code club-icon"></i>
+          <h3 class="club-name">BAUET Computer Society</h3>
+          <p class="club-description">Join our tech-focused community for coding events, workshops, and technological innovation.</p>
+          <a href="https://www.facebook.com/BAUET.Computer.Society" class="club-link" target="_blank">Learn More</a>
+        </div>
+        
+        <div class="club-card" onclick="redirect('https://www.facebook.com/HultPrizeBAUET')">
+          <i class="fas fa-trophy club-icon"></i>
+          <h3 class="club-name">HULT PRIZE at BAUET</h3>
+          <p class="club-description">Participate in the world's largest student competition for social entrepreneurship.</p>
+          <a href="https://www.facebook.com/HultPrizeBAUET" class="club-link" target="_blank">Learn More</a>
+        </div>
+        
+        <div class="club-card" onclick="redirect('https://www.facebook.com/profile.php?id=61565010053557')">
+          <i class="fas fa-hands-helping club-icon"></i>
+          <h3 class="club-name">BAUET Welfare Club</h3>
+          <p class="club-description">Dedicated to community service and making a positive impact in society.</p>
+          <a href="https://www.facebook.com/profile.php?id=61565010053557" class="club-link" target="_blank">Learn More</a>
+        </div>
+        
+        <div class="club-card" onclick="redirect('https://www.facebook.com/groups/705182326748060')">
+          <i class="fas fa-comments club-icon"></i>
+          <h3 class="club-name">BAUET Debating Society</h3>
+          <p class="club-description">Enhance your public speaking and critical thinking skills through exciting debates.</p>
+          <a href="https://www.facebook.com/groups/705182326748060" class="club-link" target="_blank">Learn More</a>
+        </div>
+        
+        <div class="club-card" onclick="redirect('https://www.facebook.com/groups/368906543614720')">
+          <i class="fas fa-futbol club-icon"></i>
+          <h3 class="club-name">BAUET Games & Sports Club</h3>
+          <p class="club-description">Participate in various sports activities and competitions throughout the year.</p>
+          <a href="https://www.facebook.com/groups/368906543614720" class="club-link" target="_blank">Learn More</a>
+        </div>
+        
+        <div class="club-card" onclick="redirect('https://www.facebook.com/groups/1153571611399797')">
+          <i class="fas fa-music club-icon"></i>
+          <h3 class="club-name">BAUET Cultural Club</h3>
+          <p class="club-description">Express yourself through music, dance, drama, and other cultural activities.</p>
+          <a href="https://www.facebook.com/groups/1153571611399797" class="club-link" target="_blank">Learn More</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-logo">
+        <span>BAUET</span>
+      </div>
+      <div class="social-links">
+        <a href="https://www.facebook.com/bauetqadirabad/" target="_blank"><i class="fab fa-facebook"></i></a>
+        <a href="https://twitter.com/bauet_official" target="_blank"><i class="fab fa-twitter"></i></a>
+        <a href="https://www.instagram.com/bauet_official" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.youtube.com/@bauetnatore53" target="_blank"><i class="fab fa-youtube"></i></a>
+        <a href="https://www.linkedin.com/company/bauet" target="_blank"><i class="fab fa-linkedin"></i></a>
+      </div>
+      <p class="copyright">© 2025 Bangladesh Army University of Engineering & Technology. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    function redirect(url) {
+      window.open(url, '_blank');
+    }
+  </script>
+</body>
+</html>

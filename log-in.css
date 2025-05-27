@@ -1,0 +1,90 @@
+/* Fullscreen background */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-image: url('AA.img'); /* replace with your image path */
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Overlay for better readability */
+.login-container {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 0 20px rgba(255,255,255,0.1);
+}
+
+/* Login form box */
+.login-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 30px 40px;
+    border-radius: 16px;
+    backdrop-filter: blur(8px);
+    color: white;
+    width: 300px;
+}
+
+.login-box h2 {
+    margin-bottom: 20px;
+}
+
+/* Inputs */
+.login-box input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 12px;
+    outline: none;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.login-box input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.login-box input:focus {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Button */
+.login-box button {
+    width: 100%;
+    padding: 12px;
+    background-color: #00bcd4;
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-weight: bold;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.login-box button:hover {
+    background-color: #0097a7;
+}
+
+/* Link */
+.login-box p {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #eee;
+}
+
+.login-box a {
+    color: #00e5ff;
+    text-decoration: none;
+}
